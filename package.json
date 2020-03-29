@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start-server": "nodemon app.js",
+    "start-front": "ng serve",
+    "start-both": "concurrently -c \"yellow.bold,green.bold\" -n \"BACKEND,FRONTEND\" \"nodemon app.js\" \"ng serve --open\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -29,23 +31,25 @@
     "@angular/platform-browser": "~9.0.7",
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
-    "rxjs": "~6.5.4",
-    "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
     "express": "^4.17.1",
+    "ngx-socket-io": "^3.0.1",
     "randomcolor": "^0.5.4",
+    "rxjs": "~6.5.4",
     "socket.io": "^2.3.0",
-    "uuid": "^7.0.2"
+    "tslib": "^1.10.0",
+    "uuid": "^7.0.2",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.7",
     "@angular/cli": "~9.0.7",
     "@angular/compiler-cli": "~9.0.7",
     "@angular/language-service": "~9.0.7",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "concurrently": "^5.1.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
@@ -53,10 +57,10 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "nodemon": "^2.0.2",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5",
-    "nodemon": "^2.0.2"
+    "typescript": "~3.7.5"
   }
 }
