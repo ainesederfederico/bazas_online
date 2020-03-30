@@ -1,0 +1,17 @@
+.sidenav {
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  top: 0;
+  left: 20px;
+  overflow-x: hidden;
+  padding-top: 20px;
+
+  span {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 25px;
+      font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+      display: block;
+  }
+}

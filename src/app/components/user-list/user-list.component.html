@@ -1,0 +1,17 @@
+<div class='sidenav'>
+
+  <div *ngIf="userData === undefined">
+
+    <div class="form-group">
+      <label for="username">Enter Username</label>
+      <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username'>
+    </div>
+
+    <input type="button" class="btn btn-block btn-success" value="Join" (click)='startGame()'>
+  </div>
+
+  <div>
+    <span  [ngStyle]="{'color': user.color}" class="badge text-uppercase" *ngFor='let user of connectedUsers '>{{ user.username }}</span>
+  </div>
+
+</div>
