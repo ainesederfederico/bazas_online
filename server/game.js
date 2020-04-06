@@ -135,7 +135,7 @@ module.exports = internal.Game = class {
 
     this.cardsPlayed.forEach((cardPlayed,index)=>{
 
-      const card_number = cardPlayed.card.number;
+      let card_number = cardPlayed.card.number;
 
       //console.log(cardPlayed.player.username,card_number, index);
 

@@ -20,7 +20,7 @@ app.get('/*', (req, res) => {
 });
 
 http.listen(process.env.PORT || 4444, () => {
-  //console.log('Listening on port 4444');
+  console.log('Listening on port 4444');
 });
 
 //###########################################################
