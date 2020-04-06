@@ -12,16 +12,18 @@ const uuid = require('uuid');
 app.disable('x-powered-by')
 
 // Angular DIST output folder
-app.use(express.static(path.join(__dirname, 'dist/bazas')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Send all other requests to the Angular app
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/bazas/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-http.listen(4444, () => {
-  console.log('Listening on port 4444');
+var server = app.listen(8080, function () {
+  var port = server.address().port;
+  console.log("App now running on port", port);
 });
+
 
 //###########################################################
 
