@@ -6,6 +6,8 @@ const path = require('path');
 const randomColor = require('randomcolor');
 const uuid = require('uuid');
 
+
+
 //Disable x-powered-by header
 app.disable('x-powered-by')
 
@@ -18,115 +20,139 @@ app.get('/*', (req, res) => {
 });
 
 http.listen(process.env.PORT || 4444, () => {
-  console.log('Listening on port 4444');
+  //console.log('Listening on port 4444');
 });
 
 //###########################################################
 
-const users = [];
-const connnections = [];
 
+const Game = require('./server/game');
+const Player = require('./server/player');
 
-// const documents = {};
-
-// io.on('connection', socket => {
-//     let previousId;
-//     const safeJoin = currentId => {
-//         socket.leave(previousId);
-//         socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
-//         previousId = currentId;
-//     }
-
-//     socket.on('getDoc', docId => {
-//         safeJoin(docId);
-//         socket.emit('document', documents[docId]);
-//     });
-
-//     socket.on('addDoc', doc => {
-//         documents[doc.id] = doc;
-//         safeJoin(doc.id);
-//         io.emit('documents', Object.keys(documents));
-//         socket.emit('document', doc);
-//     });
-
-//     socket.on('editDoc', doc => {
-//         documents[doc.id] = doc;
-//         socket.to(doc.id).emit('document', doc);
-//     });
-
-//     io.emit('documents', Object.keys(documents));
-
-//     console.log(`Socket ${socket.id} has connected`);
+// const player = new Player({
+//   id: 111,
+//   username: 'fede',
+//   color: randomColor(),
+//   cards:[]
 // });
+// const player1 = new Player({
+//   id: 222,
+//   username: 'mariana',
+//   color: randomColor(),
+//   cards:[]
+// });
+// const player2 = new Player({
+//   id: 333,
+//   username: 'maxi',
+//   color: randomColor(),
+//   cards:[]
+// });
+
+// const game = new Game();
+
+// game.addPlayer(player);
+// game.addPlayer(player1);
+// game.addPlayer(player2);
+
+// game.init();
+
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+// game.nextHand();
+
+// console.log(game.players);
+
+
+
+
+
+
+
+
+
+const connnections = [];
+const game = new Game(io);
 
 //listen on every connection
 io.on('connection', (socket) => {
 
-  console.log(`Socket ${socket.id} has connected`);
+  // console.log(`Socket ${socket.id} has connected`);
   connnections.push(socket)
 
-  socket.on('signUp', data => {
+  socket.on('sign_up', data => {
 
-    if (users.filter(u => u.username === data.username).length === 0 && data.username) {
+    if (game.players.filter(u => u.username === data.username).length === 0 && data.username) {
 
-      socket.id = uuid.v4(); // create a random id for the user
       socket.username = data.username;
 
-      const user = {
+      const player = new Player({
         id: socket.id,
         username: socket.username,
-        color: randomColor()
-      };
+        color: randomColor(),
+        cards: []
+      });
 
-      users.push(user);
-
-      io.sockets.emit('signedUp', user);
-
-      updateUsernames();
+      game.addPlayer(player);
 
     } else {
 
       console.log('username already exists');
+      //io.sockets.connected[socket.id].emit('error', 'username already exists');
 
     }
 
-
   })
 
-  //update Usernames in the client
-  const updateUsernames = () => {
-    io.sockets.emit('usersAdded', users)
-  }
+  socket.on('start', username => {
+    //Load -> mix -> give -> and send cards to each user
+    game.init();
 
-  // //listen on new_message
-  // socket.on('new_message', (data) => {
-  //     //broadcast the new message
-  //     io.sockets.emit('new_message', {message : data.message, username : socket.username,color: socket.color});
-  // })
+  });
 
-  // //listen on typing
-  // socket.on('typing', data => {
-  //     socket.broadcast.emit('typing',{username: socket.username})
-  // })
+  socket.on('next_hand', () => {
+
+    game.nextHand();
+
+  });
+
+  socket.on('send_card', data => {
+
+    game.calculateGame(socket, data);
+
+  });
 
   //Disconnect
   socket.on('disconnect', data => {
 
-    console.log('disconnect', socket.username);
+    //console.log('disconnect', socket.username);
 
     if (!socket.username)
       return;
     //find the user and delete from the users list
-    let user = undefined;
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id === socket.id) {
-        user = users[i];
+    let player = undefined;
+
+    for (let i = 0; i < game.players.length; i++) {
+
+      if (game.players[i].id === socket.id) {
+        player = game.players[i];
         break;
       }
     }
-    users.splice(user, 1);
+
+    console.log('disconnect player : ',player);
+
+    game.players.splice(player, 1);
     //Update the users list
-    updateUsernames();
+    //send new user notification to all player
+    io.sockets.emit('usersUpdated', game.players)
+
     connnections.splice(connnections.indexOf(socket), 1);
+
+    //console.log('CONNECTED USERS', users)
   })
 })

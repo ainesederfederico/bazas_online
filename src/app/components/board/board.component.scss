@@ -1,0 +1,79 @@
+.board {
+  position: fixed;
+  width: calc(100% - 330px);
+  height: 100%;
+  right: 0;
+  top: 0;
+  font-size: 18pt;
+  padding-top: 20px;
+  resize: none;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+
+  .gumbles {
+    position: relative;
+    height: 10%;
+    border: 1px solid black;
+    border-radius: 10px;
+
+  }
+
+  .all_cards {
+    position: relative;
+    height: 45%;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #29a745;
+
+    .card {
+      float: left;
+      height: 80%;
+      width: auto;
+      img{
+
+        height: 80%;
+      }
+    }
+
+  }
+
+  .my_cards {
+    position: relative;
+    height: 45%;
+    border: 2px solid black;
+    border-radius: 10px;
+
+
+  }
+
+  .card {
+    float: left;
+    height: 80%;
+    width: auto;
+
+  }
+}
+
+
+.winner-board-cover{
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: rgb(204, 226, 61);
+  opacity: 0.8;
+
+
+}
+
+
+.disable-board-cover {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background-color: rgb(177, 172, 172);
+  opacity: 0.5;
+}

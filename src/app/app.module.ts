@@ -7,6 +7,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { DocumentListComponent } from './components/document-list/document-list.component';
 import { DocumentComponent } from './components/document/document.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { BoardComponent } from './components/board/board.component';
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 
 
@@ -15,7 +16,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     AppComponent,
     DocumentListComponent,
     DocumentComponent,
-    UserListComponent
+    UserListComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,

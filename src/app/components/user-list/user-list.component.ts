@@ -1,58 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { UsersService } from "src/app/services/users.service";
+import { Subscription } from "rxjs";
+import { User } from 'src/app/models/user';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: "app-user-list",
+  templateUrl: "./user-list.component.html",
+  styleUrls: ["./user-list.component.scss"]
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
 
-  username:any;
+  subscriptions: Subscription = new Subscription();
+  username: any;
+  userData: any;
+  started: boolean = false;
 
-  userData:any;
+  connectedUsers: User[] = new Array();
+  currentPlayer:User;
 
-
-  connectedUsers:any;
-
-  constructor(private userService:UsersService) { }
+  constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.userService.usersUpdated.subscribe(
+        users => {
+          //console.log("user added", users);
+          this.connectedUsers = users;
+        },
+        error => {
+          console.error("UserListComponent.ngOnInit.usersUpdated", error);
+        }
+      )
+    );
 
-    this.userService.usersAdded.subscribe(users=>{
-      console.log('user added',users);
-      this.connectedUsers = users;
+    this.subscriptions.add(
+      this.userService.signedUpData.subscribe(
+        data => {
+          //console.log("signedUpData", data);
 
-    },error=>{
+          this.userData = data;
+        },
+        error => {
+          console.error("UserListComponent.ngOnInit.signedUpData", error);
+        }
+      )
+    );
 
-      console.error('UserListComponent.ngOnInit',error);
+    this.subscriptions.add(
+      this.userService.started.subscribe(
+        data => {
+          //console.log("started", data);
 
-    });
+          this.started = true;
 
-    this.userService.signedUpData.subscribe(data=>{
+        },
+        error => {
+          console.error("UserListComponent.ngOnInit.started", error);
+        }
+      )
+    );
 
-      console.log('signedUpData',data);
+    this.subscriptions.add(
+      this.userService.players_order.subscribe(
+        players_order => {
 
-      this.userData = data;
+          //console.log("players_order", players_order);
 
-    },error=>{
+          this.currentPlayer = players_order.current;
 
-      console.error('UserListComponent.ngOnInit',error);
-
-    });
-
-
-
-
-
+        },
+        error => {
+          console.error("UserListComponent.ngOnInit.started", error);
+        }
+      )
+    );
   }
 
-  startGame(){
-
-    console.log('start game for user ',this.username);
-
-    this.userService.signUp(this.username);
-
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
+  join() {
+    //console.log("join user ", this.username);
+
+    this.userService.signUp(this.username.toUpperCase());
+  }
+
+  start() {
+    //console.log("start ");
+
+    this.userService.start(this.username);
+  }
 }

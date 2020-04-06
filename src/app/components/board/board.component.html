@@ -1,0 +1,37 @@
+<div class="board">
+
+
+  <div class="gumbles">
+    <h3>Gumbles</h3>
+  </div>
+
+  <div class="all_cards">
+
+    <div class="winner-board-cover text-center" *ngIf="hand_winner !== undefined">
+
+      <h2> The winner is {{hand_winner.username}}</h2>
+
+    </div>
+
+    <div class="card m-1" *ngFor='let playedCard of playedCards '>
+
+      <p class="text-center text-uppercase">{{playedCard.player.username}}</p>
+      <img  [src]="'assets/img/'+playedCard.card.image+'.png'" alt="image"
+      >
+    </div>
+
+  </div>
+
+  <div class="my_cards text-center" *ngIf="me != undefined ">
+
+    <div class="disable-board-cover" [hidden]="players_order && players_order.current.username == me.username"></div>
+
+    <h3 class="m-1" *ngIf='players_order && players_order.current.username == me.username'> Your Turn! </h3>
+    <h3 class="m-1" *ngIf='players_order && players_order.current.username != me.username'> Waiting for {{players_order.current.username}} </h3>
+
+    <img class="card m-1" [src]="'assets/img/'+card.image+'.png'" alt="image" *ngFor='let card of me.cards '
+      (click)="sendCard(card)">
+
+
+  </div>
+</div>
