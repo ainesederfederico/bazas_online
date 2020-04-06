@@ -19,7 +19,7 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/bazas/index.html'));
 });
 
-http.listen(process.env.PORT || 4444, () => {
+http.listen(4444, () => {
   console.log('Listening on port 4444');
 });
 
