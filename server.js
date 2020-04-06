@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const socketIO = require('socket.io');
 const path = require('path');
 const randomColor = require('randomcolor');
 const uuid = require('uuid');
@@ -24,6 +24,7 @@ var server = app.listen(process.env.PORT || 8080, function () {
   console.log("App now running on port", port);
 });
 
+const io = socketIO(server);
 
 //###########################################################
 
