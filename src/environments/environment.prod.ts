@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socket_url :'https://bazas.herokuapp.com:8080/'
+  socket_url :'https://bazas.herokuapp.com:58669/'
 };
