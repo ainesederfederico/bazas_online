@@ -11,7 +11,7 @@ import { BoardComponent } from './components/board/board.component';
 
 import { environment } from './../environments/environment';
 
-const config: SocketIoConfig = { url: 'wss://bazas.herokuapp.com', options: {} };
+const config: SocketIoConfig = { url: '/', options: {} };
 
 
 @NgModule({
