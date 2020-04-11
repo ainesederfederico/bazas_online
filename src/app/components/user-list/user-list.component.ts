@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
 import { Subscription } from "rxjs";
-import { User } from 'src/app/models/user';
+import { Player } from 'src/app/models/user';
 
 @Component({
   selector: "app-user-list",
@@ -15,8 +15,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   userData: any;
   started: boolean = false;
 
-  connectedUsers: User[] = new Array();
-  currentPlayer:User;
+  connectedUsers: Player[] = new Array();
+  currentPlayer:Player;
 
   constructor(private userService: UsersService) {}
 

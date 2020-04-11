@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  socket_url :'https://bazas.herokuapp.com'
+  socket_url :'http://localhost:4444'
 };
 
 /*

@@ -2,7 +2,7 @@
 
 const Util = require('./utils');
 const Hand = require('./hand');
-const Card = require('./card');
+
 
 const internal = {};
 
@@ -39,6 +39,10 @@ module.exports = internal.Game = class {
     this.cardsPlayed = [];
 
     this.hand.next();
+
+    this.players.forEach(p=>{p.bet=undefined; p.handsWon=0});
+
+    this.io.sockets.emit('new_bet_sent', {players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
 
     this.mixCards();
 
@@ -91,10 +95,13 @@ module.exports = internal.Game = class {
 
         console.log('MANO TERMINADA WINNER :',winner.username);
 
+        this.players.find(u=>u.username === winner.username).handsWon ++;
+
         //vacia las cartas jugadas
         this.cardsPlayed = [];
 
-        this.io.sockets.emit('hand_finished', winner);
+        this.io.sockets.emit('hand_finished', {winner:winner,players:this.players});
+
 
         //Suma la cantidad de manos
         this.inner_hands++;
@@ -104,10 +111,28 @@ module.exports = internal.Game = class {
 
           console.log('RONDA TERMINADA');
 
-          //Vacia las manos
-          this.inner_hands = 0;
-          this.nextHand();
-          this.hand.emitPlayersOrder();
+          this.players.forEach((p)=>{
+
+            console.log(p);
+
+            if(parseInt(p.bet) == p.handsWon){
+              p.global_point+=(10 + p.handsWon);
+            }else{
+              p.global_point+= p.handsWon;
+            }
+
+          });
+
+          Util.sleep(5000).then(() => {
+
+            //Vacia las manos
+            this.inner_hands = 0;
+            this.nextHand();
+            this.hand.emitPlayersOrder();
+          });
+
+
+
 
         }else{
 
@@ -154,6 +179,15 @@ module.exports = internal.Game = class {
 
 
     return this.cardsPlayed[card_played_index].player;
+  }
+
+  setBet(socket,bet){
+
+      let player = this.players.find(u => u.username === socket.username);
+      player.bet = bet;
+      this.hand.bets +=bet;
+
+      this.io.sockets.emit('new_bet_sent', {players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
   }
 
   //Player

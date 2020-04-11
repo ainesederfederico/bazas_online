@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Subscription } from 'rxjs';
 import { Card } from 'src/app/models/card';
-import { User } from 'src/app/models/user';
+import { Player } from 'src/app/models/user';
 
 @Component({
   selector: 'app-board',
@@ -12,13 +12,12 @@ import { User } from 'src/app/models/user';
 export class BoardComponent implements OnInit, OnDestroy  {
 
   subscriptions: Subscription = new Subscription();
-  me: User;
+  me: Player;
 
   players_order:any;
-  playedCards:{player:User,card:Card}[] = new Array();
-
-
-  hand_winner:User;
+  playedCards:{player:Player,card:Card}[] = new Array();
+  globalBets:{players:Player[],totalBets:number};
+  hand_winner:{winner:Player,players:Player[]};
 
   constructor(private userService: UsersService) {}
 
@@ -54,6 +53,22 @@ export class BoardComponent implements OnInit, OnDestroy  {
     );
 
     this.subscriptions.add(
+      this.userService.new_bet_sent.subscribe(
+        data => {
+
+
+          this.globalBets = data;
+
+          console.log("new_bet_sent", this.globalBets);
+
+        },
+        error => {
+          console.error("BoardComponent.ngOnInit.newCardSent", error);
+        }
+      )
+    );
+
+    this.subscriptions.add(
       this.userService.players_order.subscribe(
         players_order => {
 
@@ -76,6 +91,7 @@ export class BoardComponent implements OnInit, OnDestroy  {
           console.log("hand_finished", data);
           this.hand_winner = data;
 
+          this.globalBets.players = this.hand_winner.players;
 
           setTimeout( () => {
 
@@ -104,6 +120,12 @@ export class BoardComponent implements OnInit, OnDestroy  {
     this.me.cards = this.me.cards.filter(obj => obj !== card);
 
     this.userService.sendCard(card);
+
+  }
+
+  sendBet(){
+
+    this.userService.sendBet(this.me.bet);
 
   }
 }

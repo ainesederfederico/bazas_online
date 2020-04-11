@@ -46,7 +46,13 @@ function mixCards(cards) {
   return cards;
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 module.exports = {
   loadCards,
-  mixCards
+  mixCards,
+  sleep
 }

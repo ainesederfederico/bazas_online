@@ -20,12 +20,15 @@ module.exports = internal.Hand = class {
 
     this.cardsXPlayer = 2;
 
+    this.bets=0;
+
   }
 
   next() {
 
     console.log('Hand -> next');
 
+    this.bets=0;
     this.getNextPlayer()
 
     this.firstPlayerByHand = this.currentPlayer;

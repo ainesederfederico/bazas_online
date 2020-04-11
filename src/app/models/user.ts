@@ -1,9 +1,11 @@
 import { Card } from './card';
 
-export interface User {
+export interface Player {
 
       id: number,
       username: string,
       color: string,
-      cards:Card[]
+      cards:Card[],
+      bet:number,
+      handsWon:number
 }

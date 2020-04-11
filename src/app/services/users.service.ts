@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Card } from '../models/card';
-import { User } from '../models/user';
+import { Player } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  usersUpdated = this.socket.fromEvent<User[]>('usersUpdated');
+  usersUpdated = this.socket.fromEvent<Player[]>('usersUpdated');
   signedUpData = this.socket.fromEvent<{}>('signedUp');
-  started = this.socket.fromEvent<User>('started');
+  started = this.socket.fromEvent<Player>('started');
 
   players_order = this.socket.fromEvent<any>('players_order');
 
-  newCardSent = this.socket.fromEvent<{player:User,card:Card}[]>('new_card_sent');
+  newCardSent = this.socket.fromEvent<{player:Player,card:Card}[]>('new_card_sent');
 
-  hand_finished = this.socket.fromEvent<User>('hand_finished');
+  new_bet_sent = this.socket.fromEvent<{players:Player[],totalBets:number}>('new_bet_sent');
+
+  hand_finished = this.socket.fromEvent<{winner:Player,players:Player[]}>('hand_finished');
 
   constructor(private socket: Socket) { }
 
@@ -35,6 +37,11 @@ export class UsersService {
   sendCard(card:Card) {
 
     this.socket.emit('send_card', card);
+  }
+
+  sendBet(bet:number) {
+
+    this.socket.emit('send_bet', bet);
   }
 
   next_hand(){

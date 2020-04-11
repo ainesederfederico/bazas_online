@@ -4,24 +4,34 @@
   height: 100%;
   right: 0;
   top: 0;
-  font-size: 18pt;
+
   padding-top: 20px;
   resize: none;
   border: 2px solid black;
   border-radius: 10px;
   padding: 20px;
 
-  .gumbles {
+  .bets {
+    padding: 10px;
     position: relative;
-    height: 10%;
+    height: auto;
     border: 1px solid black;
     border-radius: 10px;
+
+    select{
+      width: 100px;
+    }
+    .bet{
+
+
+    }
+
 
   }
 
   .all_cards {
     position: relative;
-    height: 45%;
+    height: 35%;
     border: 1px solid black;
     border-radius: 10px;
     background-color: #29a745;

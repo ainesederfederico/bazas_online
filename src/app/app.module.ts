@@ -11,7 +11,7 @@ import { BoardComponent } from './components/board/board.component';
 
 import { environment } from './../environments/environment';
 
-const config: SocketIoConfig = { url: '/', options: {} };
+const config: SocketIoConfig = { url: environment.socket_url, options: {} };
 
 
 @NgModule({

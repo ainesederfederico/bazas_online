@@ -9,6 +9,9 @@ module.exports = internal.Player = class {
     this.username = arg.username;
     this.color = arg.color;
     this.cards = [];
+    this.bet ;
+    this.handsWon=0;
+    this.global_point=0;
   }
 
 
@@ -22,5 +25,10 @@ module.exports = internal.Player = class {
 
   cleanCards(){
     this.cards =[];
+  }
+
+  getUserAndBet(){
+
+    return {username:this.username,bet:this.bet};
   }
 }
