@@ -20,6 +20,8 @@ export class UsersService {
 
   hand_finished = this.socket.fromEvent<{winner:Player,players:Player[]}>('hand_finished');
 
+  players_status = this.socket.fromEvent<Player[]>('players_status');
+
   constructor(private socket: Socket) { }
 
   signUp(username) {

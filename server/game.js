@@ -113,7 +113,7 @@ module.exports = internal.Game = class {
 
           this.players.forEach((p)=>{
 
-            console.log(p);
+
 
             if(parseInt(p.bet) == p.handsWon){
               p.global_point+=(10 + p.handsWon);
@@ -122,6 +122,8 @@ module.exports = internal.Game = class {
             }
 
           });
+
+          this.io.sockets.emit('players_status', this.players);
 
           Util.sleep(5000).then(() => {
 

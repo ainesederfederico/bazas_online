@@ -7,5 +7,6 @@ export interface Player {
       color: string,
       cards:Card[],
       bet:number,
-      handsWon:number
+      handsWon:number,
+      global_point:number
 }

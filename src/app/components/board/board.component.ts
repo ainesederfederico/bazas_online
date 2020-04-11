@@ -19,10 +19,24 @@ export class BoardComponent implements OnInit, OnDestroy  {
   globalBets:{players:Player[],totalBets:number};
   hand_winner:{winner:Player,players:Player[]};
 
+  players_status:Player[];
+
+
   constructor(private userService: UsersService) {}
 
 
   ngOnInit(): void {
+
+    this.subscriptions.add(
+      this.userService.players_status.subscribe(
+        data => {
+          this.players_status = data;
+        },
+        error => {
+          console.error("BoardComponent.ngOnInit.players_status", error);
+        }
+      )
+    );
 
     this.subscriptions.add(
       this.userService.started.subscribe(

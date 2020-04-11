@@ -2,8 +2,17 @@
 
 
   <div class="bets">
+
     <h3>Apuestas</h3>
     <h5 *ngIf="players_order != undefined && me.username === players_order.lastPlayerByHand.username">Sos el ultimo en esta mano</h5>
+
+    <div *ngIf="players_status!=undefined">
+
+      <button  *ngFor="let item of players_status" type="button" class="btn btn-success m-2">
+        {{item.username}} <span class="badge badge-danger">{{item.global_point}}</span>
+      </button>
+
+    </div>
 
     <div class="bet">
       <span class="mr-1">Mi apuesta:</span>
