@@ -18,13 +18,11 @@
     border: 1px solid black;
     border-radius: 10px;
 
-    select{
+    select {
       width: 100px;
     }
-    .bet{
 
-
-    }
+    .bet {}
 
 
   }
@@ -40,7 +38,8 @@
       float: left;
       height: 80%;
       width: auto;
-      img{
+
+      img {
 
         height: 80%;
       }
@@ -66,14 +65,13 @@
 }
 
 
-.winner-board-cover{
+.winner-board-cover {
 
   position: absolute;
   height: 100%;
   width: 100%;
   z-index: 1;
-  background-color: rgb(204, 226, 61);
-  opacity: 0.8;
+  color: white;
 
 
 }
