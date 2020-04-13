@@ -12,7 +12,7 @@ export class UsersService {
   signedUpData = this.socket.fromEvent<{}>('signedUp');
   started = this.socket.fromEvent<Player>('started');
 
-  players_order = this.socket.fromEvent<any>('players_order');
+  //players_order = this.socket.fromEvent<any>('players_order');
 
   newCardSent = this.socket.fromEvent<{player:Player,card:Card}[]>('new_card_sent');
 
@@ -20,7 +20,7 @@ export class UsersService {
 
   hand_finished = this.socket.fromEvent<{winner:Player,players:Player[]}>('hand_finished');
 
-  players_status = this.socket.fromEvent<Player[]>('players_status');
+  players_status = this.socket.fromEvent<{current:Player,first:Player,last:Player,all:Player[]}>('players_status');
 
   constructor(private socket: Socket) { }
 

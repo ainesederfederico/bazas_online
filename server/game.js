@@ -30,7 +30,7 @@ module.exports = internal.Game = class {
     this.distributeCards();
 
 
-    this.hand.emitPlayersOrder();
+    this.hand.emitPlayersStatus();
 
   }
 
@@ -123,14 +123,15 @@ module.exports = internal.Game = class {
 
           });
 
-          this.io.sockets.emit('players_status', this.players);
+          this.hand.emitPlayersStatus();
+          // this.io.sockets.emit('players_status', this.players);
 
           Util.sleep(5000).then(() => {
 
             //Vacia las manos
             this.inner_hands = 0;
             this.nextHand();
-            this.hand.emitPlayersOrder();
+            this.hand.emitPlayersStatus();
           });
 
 
@@ -140,7 +141,7 @@ module.exports = internal.Game = class {
 
           //El jugador al que le toca es el ganador de la mano
           this.hand.setCurrentPlayer(winner);
-          this.hand.emitPlayersOrder();
+          this.hand.emitPlayersStatus();
 
         }
 
@@ -148,7 +149,7 @@ module.exports = internal.Game = class {
       }else{
 
         this.hand.getNextPlayer();
-        this.hand.emitPlayersOrder();
+        this.hand.emitPlayersStatus();
 
       }
 
@@ -187,7 +188,7 @@ module.exports = internal.Game = class {
 
       let player = this.players.find(u => u.username === socket.username);
       player.bet = bet;
-      this.hand.bets +=bet;
+      this.hand.bets += parseInt(bet);
 
       this.io.sockets.emit('new_bet_sent', {players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
   }

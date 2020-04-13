@@ -14,13 +14,13 @@ module.exports = internal.Hand = class {
     this.currentPlayer;
     this.getNextPlayer();
 
-    this.firstPlayerByHand =this.currentPlayer;
+    this.firstPlayerByHand = this.currentPlayer;
     this.lastPlayerByHand = this.getLastPlayerByHand();
 
 
     this.cardsXPlayer = 2;
 
-    this.bets=0;
+    this.bets = 0;
 
   }
 
@@ -28,7 +28,7 @@ module.exports = internal.Hand = class {
 
     console.log('Hand -> next');
 
-    this.bets=0;
+    this.bets = 0;
     this.getNextPlayer()
 
     this.firstPlayerByHand = this.currentPlayer;
@@ -76,17 +76,18 @@ module.exports = internal.Hand = class {
 
   setCurrentPlayer(player) {
 
-      this.currentPlayer = player;
-      this.firstPlayerByHand =this.currentPlayer;
-      this.lastPlayerByHand = this.getLastPlayerByHand();
+    this.currentPlayer = player;
+    this.firstPlayerByHand = this.currentPlayer;
+    this.lastPlayerByHand = this.getLastPlayerByHand();
 
   }
 
-  emitPlayersOrder() {
-    this.io.sockets.emit('players_order', {
+  emitPlayersStatus() {
+    this.io.sockets.emit('players_status', {
       'current': this.currentPlayer,
-      'firstPlayerByHand': this.firstPlayerByHand,
-      'lastPlayerByHand': this.lastPlayerByHand
+      'first': this.firstPlayerByHand,
+      'last': this.lastPlayerByHand,
+      'all': this.players
     });
 
   }

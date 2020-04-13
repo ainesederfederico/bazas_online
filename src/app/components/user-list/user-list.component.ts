@@ -21,6 +21,18 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
+
+    this.subscriptions.add(
+      this.userService.players_status.subscribe(
+        data => {
+          this.currentPlayer = data.current;
+        },
+        error => {
+          console.error("BoardComponent.ngOnInit.players_status", error);
+        }
+      )
+    );
+
     this.subscriptions.add(
       this.userService.usersUpdated.subscribe(
         users => {
@@ -60,20 +72,20 @@ export class UserListComponent implements OnInit, OnDestroy {
       )
     );
 
-    this.subscriptions.add(
-      this.userService.players_order.subscribe(
-        players_order => {
+    // this.subscriptions.add(
+    //   this.userService.players_order.subscribe(
+    //     players_order => {
 
-          //console.log("players_order", players_order);
+    //       //console.log("players_order", players_order);
 
-          this.currentPlayer = players_order.current;
+    //       this.currentPlayer = players_order.current;
 
-        },
-        error => {
-          console.error("UserListComponent.ngOnInit.started", error);
-        }
-      )
-    );
+    //     },
+    //     error => {
+    //       console.error("UserListComponent.ngOnInit.started", error);
+    //     }
+    //   )
+    // );
   }
 
   ngOnDestroy() {

@@ -1,36 +1,53 @@
 <div class="board" *ngIf="me != undefined ">
 
+  <!-- MENSAJES -->
+  <div class="messages text-center">
 
+    <h3 class="m-1" *ngIf='players_status && !all_bets_ready'> Todos deben apostar! </h3>
+    <h5 class="text-danger" *ngIf="players_status != undefined && me.username === players_status.last.username">Sos el ultimo en esta mano</h5>
+
+    <h3 class="m-1" *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'> Es tu turno ! </h3>
+    <h3 class="m-1" *ngIf='players_status && players_status.current.username != me.username &&  all_bets_ready'> Es el turno de {{players_status.current.username}} </h3>
+  </div>
+
+  <!-- ####################################################################################################### -->
   <div class="bets">
 
     <h3>Apuestas</h3>
-    <h5 *ngIf="players_order != undefined && me.username === players_order.lastPlayerByHand.username">Sos el ultimo en esta mano</h5>
 
+    <!-- PUNTAJE TOTAL -->
     <div *ngIf="players_status!=undefined">
 
-      <button  *ngFor="let item of players_status" type="button" class="btn btn-success m-2">
+      <button *ngFor="let item of players_status.all" type="button" class="btn btn-success m-2">
         {{item.username}} <span class="badge badge-danger">{{item.global_point}}</span>
       </button>
 
     </div>
 
-    <div class="bet">
+    <!-- MI APUESTA -->
+    <div class="bet" *ngIf="players_status!=undefined && me.bet == undefined ">
       <span class="mr-1">Mi apuesta:</span>
-      <select [(ngModel)]="me.bet" (change)="sendBet()">
-        <option [value]="0">0</option>
-        <option *ngFor="let item of me.cards;let index=index" [value]="index+1">{{index+1}}</option>
+      <select  [(ngModel)]="me.bet" (change)="sendBet()" [disabled]="me.username == players_status.last.username && !can_last_player_bet">
+        <option *ngFor='let element of getAvailableBets(); let i = index' [value]='element'>
+          {{element}}
+        </option>
       </select>
     </div>
 
+    <!-- APUESTAS DE TODOS -->
     <div *ngIf="globalBets!=undefined">
 
-      <button  *ngFor="let item of globalBets.players" type="button" class="btn btn-warning m-2">
-        {{item.username}} <span class="badge badge-danger">{{item.bet}}</span> <span class="badge badge-success">{{item.handsWon}}</span>
+      <button *ngFor="let item of globalBets.players" type="button" class="btn btn-warning m-2">
+        {{item.username}} <span class="badge badge-danger">{{item.bet}}</span> <span
+          class="badge badge-success">{{item.handsWon}}</span>
       </button>
 
     </div>
 
   </div>
+
+
+  <!-- ####################################################################################################### -->
 
   <div class="all_cards">
 
@@ -48,13 +65,12 @@
 
   </div>
 
+  <!-- ####################################################################################################### -->
+
+
   <div class="my_cards text-center" *ngIf="me != undefined ">
 
-    <div class="disable-board-cover" [hidden]="players_order && players_order.current.username == me.username"></div>
-
-    <h3 class="m-1" *ngIf='players_order && players_order.current.username == me.username'> Es tu turno ! </h3>
-    <h3 class="m-1" *ngIf='players_order && players_order.current.username != me.username'> Esperando por
-      {{players_order.current.username}} </h3>
+    <div class="disable-board-cover" [hidden]="players_status && players_status.current.username == me.username && all_bets_ready"></div>
 
     <img class="card m-1" [src]="'assets/img/'+card.image+'.png'" alt="image" *ngFor='let card of me.cards '
       (click)="sendCard(card)">
