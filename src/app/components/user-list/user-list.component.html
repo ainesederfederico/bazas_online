@@ -1,23 +1,61 @@
 <div class='sidenav'>
 
+
   <div *ngIf="userData === undefined">
 
     <div class="form-group">
       <label for="username">Enter Username</label>
-      <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username' (keyup.enter)="join()">
+      <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username'
+        (keyup.enter)="join()">
     </div>
 
     <input type="button" class="btn btn-block btn-success" value="Join" (click)='join()'>
   </div>
 
-  <div>
-    <span  [ngStyle]="{'color': user.color}" [ngClass]="{'badge-success':currentPlayer && user.id == currentPlayer.id}" class="badge text-uppercase" *ngFor='let user of connectedUsers '>
+  <!-- ####################################################################################################### -->
 
-      {{ user.username }}
-    </span>
+  <div class="users_list">
+
+    <div *ngIf="players_status==undefined">
+      <div class="row" *ngFor='let user of connectedUsers '>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+          <span [ngStyle]="{'color': user.color}" >
+            {{ user.username }}
+          </span>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+
+    <!-- PUNTAJE TOTAL -->
+    <div *ngIf="players_status!=undefined">
+
+      <div class="row" *ngFor="let player of players_status.all">
+        <div class="col-md-4">
+          <span *ngIf="players_status.current.id === player.id" class="badge badge-success turn">Turno!</span>
+        </div>
+        <div class="col-md-4 text-left">
+          <span [ngStyle]="{'color': player.color}" class="badge text-uppercase mt-1">
+            {{ player.username }}
+          </span>
+        </div>
+        <div class="col-md-4">
+          <span class="badge badge-danger">{{player.global_point}}</span>
+        </div>
+      </div>
+
+
+
+    </div>
+
   </div>
 
 
-  <input *ngIf="userData !== undefined && !started && connectedUsers.length > 1" type="button" class="btn btn-block btn-danger" value="Start" (click)='start()'>
+  <input
+    *ngIf="userData !== undefined && !started && connectedUsers.length > 1 &&  connectedUsers[0].username === userData.username"
+    type="button" class="btn btn-block btn-danger" value="Start" (click)='start()'>
 
 </div>

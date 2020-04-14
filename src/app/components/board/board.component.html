@@ -1,13 +1,24 @@
 <div class="board" *ngIf="me != undefined ">
 
   <!-- MENSAJES -->
-  <div class="messages text-center">
+  <div class="messages text-center row">
 
-    <h3 class="m-1" *ngIf='players_status && !all_bets_ready'> Todos deben apostar! </h3>
-    <h5 class="text-danger" *ngIf="players_status != undefined && me.username === players_status.last.username">Sos el ultimo en esta mano</h5>
 
-    <h3 class="m-1" *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'> Es tu turno ! </h3>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <h3 class="m-1" *ngIf='players_status && !all_bets_ready'> Todos deben apostar! </h3>
+      <h3 class="m-1" *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'> Es tu turno ! </h3>
     <h3 class="m-1" *ngIf='players_status && players_status.current.username != me.username &&  all_bets_ready'> Es el turno de {{players_status.current.username}} </h3>
+
+    </div>
+    <div class="col-md-4">
+      <p class="text-danger" *ngIf="players_status != undefined && me.username === players_status.last.username">Sos el ultimo en esta mano</p>
+    </div>
+
+
+
+
+
   </div>
 
   <!-- ####################################################################################################### -->
@@ -16,13 +27,13 @@
     <h3>Apuestas</h3>
 
     <!-- PUNTAJE TOTAL -->
-    <div *ngIf="players_status!=undefined">
+    <!-- <div *ngIf="players_status!=undefined">
 
       <button *ngFor="let item of players_status.all" type="button" class="btn btn-success m-2">
         {{item.username}} <span class="badge badge-danger">{{item.global_point}}</span>
       </button>
 
-    </div>
+    </div> -->
 
     <!-- MI APUESTA -->
     <div class="bet" *ngIf="players_status!=undefined && me.bet == undefined ">

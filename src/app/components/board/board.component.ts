@@ -29,6 +29,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
+
     this.subscriptions.add(
       this.userService.players_status.subscribe(
         (data) => {
@@ -91,7 +92,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           console.log("new_bet_sent", this.globalBets);
         },
         (error) => {
-          console.error("BoardComponent.ngOnInit.newCardSent", error);
+          console.error("BoardComponent.ngOnInit.new_bet_sent", error);
         }
       )
     );
@@ -118,11 +119,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    throw new Error("Method not implemented.");
+    this.subscriptions.unsubscribe();
   }
 
   getAvailableBets() {
-    let available_bets = []; // new Array(this.me.cards.length + 1);
+    let available_bets = [];
 
     for (let index = 0; index < this.me.cards.length + 1; index++) {
       available_bets.push(index);
@@ -142,7 +143,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   sendCard(card) {
-    //console.log(card);
+
     this.me.cards = this.me.cards.filter((obj) => obj !== card);
 
     this.userService.sendCard(card);
