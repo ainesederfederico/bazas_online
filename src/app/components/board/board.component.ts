@@ -152,4 +152,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   sendBet() {
     this.userService.sendBet(this.me.bet);
   }
+
+  getPlayerBet(username):any{
+    if(this.globalBets !=undefined){
+      const player = this.globalBets.players.find(p=>p.username === username);
+      return player ? player.bet : null;
+    }else{
+      return null;
+    }
+
+  }
 }

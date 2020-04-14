@@ -1,45 +1,51 @@
 .board {
   position: fixed;
-  width: calc(100% - 330px);
   height: 100%;
-  right: 0;
-  top: 0;
-
-  padding-top: 20px;
-  resize: none;
-  border: 2px solid black;
+  //padding: 20px;
+  //border: 5px solid rgb(240, 45, 45);
   border-radius: 10px;
-  padding: 20px;
 
-  .bets {
-    padding: 10px;
+  background: #96780f;
+  background-image: url("../../../assets/img/zenbg-1.png"), url("../../../assets/img/zenbg-2.png");
+  background-repeat: repeat-x, repeat;
+
+  .dashboard {
+
+    background: #f1f1f1;
     position: relative;
     height: auto;
-    border: 1px solid black;
+    //border: 2px solid rgb(45, 58, 240);
     border-radius: 10px;
+    padding: 10px;
 
-    select {
-      width: 100px;
+    .general_messages {
+
+      border: 2px solid rgb(201, 45, 45);
+      border-radius: 10px;
+
     }
-
-    .bet {}
-
 
   }
 
   .all_cards {
     position: relative;
     height: 35%;
-    border: 1px solid black;
+    //width: 97%;
+    margin: 10px;
+    //border: 2px solid black;
     border-radius: 10px;
-    background-color: #29a745;
+    //background-color: #29a745;
+    padding: 10px;
 
-    .card {
+    .cards {
       float: left;
       height: 95%;
       width: auto;
-      img {
 
+      p{
+        color: white;
+      }
+      img {
         height: 85%;
       }
     }
@@ -47,20 +53,25 @@
   }
 
   .my_cards {
-    position: relative;
+
+    position: absolute;
+    bottom: 0;
     height: 35%;
-    border: 2px solid black;
+    width: 97%;
+    margin: 10px;
+    border: 2px solid white;
     border-radius: 10px;
 
+    .cards {
 
+      float: left;
+      height: 95%;
+      width: auto;
+
+    }
   }
 
-  .card {
-    float: left;
-    height: 95%;
-    width: auto;
 
-  }
 }
 
 
