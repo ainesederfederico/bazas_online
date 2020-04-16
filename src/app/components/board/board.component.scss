@@ -51,25 +51,30 @@
     }
 
   }
+.my_cards {
 
-  .my_cards {
+  position: absolute;
+  bottom: 0;
+  height: 35%;
+  width: 97%;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 10px;
 
-    position: absolute;
-    bottom: 0;
-    height: 35%;
-    width: 97%;
-    margin: 10px;
-    border: 2px solid white;
-    border-radius: 10px;
+  // overflow-x: scroll;
+  // overflow-y: hidden;
+  // white-space: nowrap;
 
-    .cards {
+  .cards {
 
-      float: left;
-      height: 95%;
-      width: auto;
+    float: left;
+    height: 95%;
+    width: auto;
+    //display: inline-block;
 
-    }
+
   }
+}
 
 
 }
@@ -95,3 +100,5 @@
   background-color: rgb(177, 172, 172);
   opacity: 0.5;
 }
+
+

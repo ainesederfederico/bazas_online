@@ -9,30 +9,27 @@ module.exports = internal.Hand = class {
     this.io = io;
     this.players = players;
     this.up = true;
-    this.maxCardsXPlayer = parseInt(48 / this.players.length) > 6 ? 6 : parseInt(48 / this.players.length);
-
+    this.maxCardsXPlayer = parseInt(48 / this.players.length) > 10 ? 10 : parseInt(48 / this.players.length);
     this.currentPlayer;
-    this.getNextPlayer();
+
+    this.setCurrentWithNext();
 
     this.firstPlayerByHand = this.currentPlayer;
     this.lastPlayerByHand = this.getLastPlayerByHand();
-
-
-    this.cardsXPlayer = 2;
-
+    this.cardsXPlayer = 6;
     this.bets = 0;
 
   }
 
   next() {
 
-    console.log('Hand -> next');
+
 
     this.bets = 0;
-    this.getNextPlayer()
 
-    this.firstPlayerByHand = this.currentPlayer;
-    this.lastPlayerByHand = this.getLastPlayerByHand();
+    this.setFirstAndLast()
+
+    this.currentPlayer = this.firstPlayerByHand;
 
     if (this.cardsXPlayer === this.maxCardsXPlayer && this.up) {
       this.up = false;
@@ -51,34 +48,48 @@ module.exports = internal.Hand = class {
 
     }
 
-    console.log('Hand -> next :', this.cardsXPlayer, 'cards | fist player [', this.firstPlayerByHand.username, '] | last player [', this.lastPlayerByHand.username, ']');
+    console.log('Hand -> next :', this.cardsXPlayer, 'cards | first player [', this.firstPlayerByHand.username, '] | last player [', this.lastPlayerByHand.username, ']');
 
   }
 
-  getNextPlayer() {
-
-    //if currentPlayer doesn't exist calculate one randomically
-    if (this.currentPlayer === undefined)
-      this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
+  setCurrentWithNext() {
 
 
-    console.log('currentPlayer : ', this.currentPlayer.username);
+    //if currentPlayer doesn't exist set first connected
+    if (this.currentPlayer === undefined){
 
-    const currentPlayerIndex = this.players.findIndex(i => i.username === this.currentPlayer.username);
+      this.currentPlayer = this.players[0];
 
-    const nextPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
+    }else{
+
+      const currentPlayerIndex = this.players.findIndex(i => i.username === this.currentPlayer.username);
+      const nextPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
+      this.currentPlayer = this.players[nextPlayerIndex];
+
+    }
+
+    console.log('setCurrentWithNext : ', this.currentPlayer.username);
+
+  }
+
+  setFirstAndLast() {
 
 
-    this.currentPlayer = this.players[nextPlayerIndex];
+      const currentPlayerIndex = this.players.findIndex(i => i.username === this.firstPlayerByHand.username);
+      const nextPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
+      this.firstPlayerByHand = this.players[nextPlayerIndex];
 
-    console.log('nextPlayer : ', this.currentPlayer.username);
+      this.lastPlayerByHand = this.getLastPlayerByHand();
+
+    console.log('setFirstAndLast : first player [', this.firstPlayerByHand.username, '] | last player [', this.lastPlayerByHand.username, ']');
+
   }
 
   setCurrentPlayer(player) {
 
     this.currentPlayer = player;
-    this.firstPlayerByHand = this.currentPlayer;
-    this.lastPlayerByHand = this.getLastPlayerByHand();
+    // this.firstPlayerByHand = this.currentPlayer;
+    // this.lastPlayerByHand = this.getLastPlayerByHand();
 
   }
 
@@ -95,9 +106,7 @@ module.exports = internal.Hand = class {
 
   getLastPlayerByHand() {
 
-
     const lastPlayerIndex = this.players.indexOf(this.firstPlayerByHand) === 0 ? this.players.length - 1 : this.players.indexOf(this.firstPlayerByHand) - 1;
-
 
     return this.players[lastPlayerIndex];
   }

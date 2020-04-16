@@ -24,7 +24,7 @@ module.exports = internal.Game = class {
     this.cardsPlayed = [];
     this.hand = new Hand(this.io,this.players);
 
-    console.log('Hand -> first :', this.hand.cardsXPlayer, 'cards | fist player [', this.hand.firstPlayerByHand.username, '] | last player [', this.hand.lastPlayerByHand.username, ']');
+    console.log('Hand -> first :', this.hand.cardsXPlayer, 'cards | first player [', this.hand.firstPlayerByHand.username, '] | last player [', this.hand.lastPlayerByHand.username, ']');
 
     this.mixCards();
     this.distributeCards();
@@ -40,9 +40,17 @@ module.exports = internal.Game = class {
 
     this.hand.next();
 
-    this.players.forEach(p=>{p.bet=undefined; p.handsWon=0});
+    console.log('Hand -> first :', this.hand.cardsXPlayer, 'cards | first player [', this.hand.firstPlayerByHand.username, '] | last player [', this.hand.lastPlayerByHand.username, ']');
 
-    this.io.sockets.emit('new_bet_sent', {players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
+    this.players.forEach(p => {
+      p.bet = undefined;
+      p.handsWon = 0
+    });
+
+    this.io.sockets.emit('new_bet_sent', {
+      players: this.players.filter(p => p.bet != undefined),
+      totalBets: this.hand.bets
+    });
 
     this.mixCards();
 
@@ -148,7 +156,7 @@ module.exports = internal.Game = class {
 
       }else{
 
-        this.hand.getNextPlayer();
+        this.hand.setCurrentWithNext();
         this.hand.emitPlayersStatus();
 
       }
