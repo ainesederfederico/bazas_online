@@ -112,7 +112,7 @@
   <div class="row my_cards" *ngIf="me != undefined ">
 
     <div class="disable-board-cover"
-      [hidden]="players_status && players_status.current.username == me.username && all_bets_ready"></div>
+      [hidden]="players_status && players_status.current.username == me.username && all_bets_ready && hand_winner == undefined"></div>
 
     <img class="cards m-2" [src]="'assets/img/'+card.image+'.png'" alt="image" *ngFor='let card of me.cards '
       (click)="sendCard(card)">
