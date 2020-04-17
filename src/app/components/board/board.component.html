@@ -17,16 +17,14 @@
 				<div class="card-footer">
 					<div class="row" >
             <div class="col-md-6">
-              <select [(ngModel)]="me.bet"  [disabled]="me.username == players_status.last.username && !can_last_player_bet" class="form-control">
+              <a class="btn btn-default block">Apuesta</a>
+            </div>
+            <div class="col-md-6">
+              <select (change)="sendBet()" [(ngModel)]="me.bet"  [disabled]="me.username == players_status.last.username && !can_last_player_bet" class="form-control">
                 <option *ngFor='let element of getAvailableBets(); let i = index' [value]='element'>
                   {{element}}
                 </option>
               </select>
-            </div>
-            <div class="col-md-6">
-              <button type="button" class="btn btn-block btn-info" (click)="sendBet()">
-                Enviar
-              </button>
             </div>
           </div>
 				</div>
