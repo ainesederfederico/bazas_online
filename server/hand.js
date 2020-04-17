@@ -9,7 +9,7 @@ module.exports = internal.Hand = class {
     this.io = io;
     this.players = players;
     this.up = true;
-    this.maxCardsXPlayer = parseInt(48 / this.players.length) > 10 ? 10 : parseInt(48 / this.players.length);
+    this.maxCardsXPlayer = parseInt(48 / this.players.length) > 7 ? 7 : parseInt(48 / this.players.length);
     this.currentPlayer;
 
     this.setCurrentWithNext();
