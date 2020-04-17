@@ -16,10 +16,13 @@ module.exports = internal.Game = class {
     this.cardsPlayed = [];
     this.inner_hands = 0;
     this.hand;
+    this.status;
 
   }
 
   init() {
+
+    this.status ='started';
 
     this.cardsPlayed = [];
     this.hand = new Hand(this.io,this.players);

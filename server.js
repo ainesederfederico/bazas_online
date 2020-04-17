@@ -41,22 +41,36 @@ io.on('connection', (socket) => {
 
   socket.on('sign_up', data => {
 
-    if (game.players.filter(u => u.username === data.username).length === 0 && data.username) {
+    console.log(' game.status',
+      game.status
+    );
 
-      socket.username = data.username;
+    if(game.status == undefined){
 
-      const player = new Player({
-        id: socket.id,
-        username: socket.username,
-        color: randomColor(),
-        cards: []
-      });
+      if (game.players.filter(u => u.username === data.username).length === 0 && data.username) {
 
-      game.addPlayer(player);
+        socket.username = data.username;
 
-    } else {
+        const player = new Player({
+          id: socket.id,
+          username: socket.username,
+          color: randomColor(),
+          cards: []
+        });
 
-      console.log('username already exists');
+        game.addPlayer(player);
+
+      } else {
+
+        console.log('username already exists');
+        //io.sockets.connected[socket.id].emit('error', 'username already exists');
+
+      }
+
+
+    }else {
+
+      console.log('EL JUEGO ESTA INCIADO');
       //io.sockets.connected[socket.id].emit('error', 'username already exists');
 
     }
