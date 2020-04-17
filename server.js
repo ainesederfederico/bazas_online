@@ -41,11 +41,11 @@ io.on('connection', (socket) => {
 
   socket.on('sign_up', data => {
 
-    console.log(' game.status',
-      game.status
-    );
+    // console.log(' game.status',
+    //   game.status
+    // );
 
-    if(game.status == undefined){
+    //if(game.status == undefined){
 
       if (game.players.filter(u => u.username === data.username).length === 0 && data.username) {
 
@@ -68,12 +68,12 @@ io.on('connection', (socket) => {
       }
 
 
-    }else {
+    // }else {
 
-      console.log('EL JUEGO ESTA INCIADO');
-      //io.sockets.connected[socket.id].emit('error', 'username already exists');
+    //   console.log('EL JUEGO ESTA INCIADO');
+    //   //io.sockets.connected[socket.id].emit('error', 'username already exists');
 
-    }
+    // }
 
   })
 
