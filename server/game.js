@@ -198,7 +198,14 @@ module.exports = internal.Game = class {
       player.bet = bet;
       this.hand.bets += parseInt(bet);
 
-      this.io.sockets.emit('new_bet_sent', {players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
+      let nextPlayerBet = undefined;
+
+      if(this.players.find(u => u.bet === undefined) != undefined)
+      {
+        nextPlayerBet = this.hand.getNextPlayer(player)
+      }
+
+      this.io.sockets.emit('new_bet_sent', {nextPlayer:nextPlayerBet,players:this.players.filter(p=>p.bet != undefined),totalBets:this.hand.bets});
   }
 
   //Player

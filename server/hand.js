@@ -72,6 +72,13 @@ module.exports = internal.Hand = class {
 
   }
 
+  getNextPlayer(player){
+
+      const currentPlayerIndex = this.players.findIndex(i => i.username === player.username);
+      const nextPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
+      return this.players[nextPlayerIndex];
+  }
+
   setFirstAndLast() {
 
 

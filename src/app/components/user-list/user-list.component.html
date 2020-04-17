@@ -4,19 +4,22 @@
   <div *ngIf="userData === undefined">
 
     <div class="form-group">
-      <label for="username">Enter Username</label>
+      <label for="username">Pone tu nombre</label>
       <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username'
         (keyup.enter)="join()">
     </div>
 
-    <input type="button" class="btn btn-block btn-success" value="Join" (click)='join()'>
+    <input type="button" class="btn btn-block btn-success" value="Entrar" (click)='join()'>
   </div>
 
   <!-- ####################################################################################################### -->
 
   <div class="users_list">
 
-    <div *ngIf="players_status==undefined">
+    <div *ngIf="connectedUsers.length > 0">
+
+      <label class="text-uppercase">Jugadores Conectados</label>
+
       <div class="row" *ngFor='let user of connectedUsers '>
         <div class="col-md-4">
 
@@ -30,32 +33,11 @@
       </div>
     </div>
 
-    <!-- PUNTAJE TOTAL -->
-    <div *ngIf="players_status!=undefined">
-
-      <div class="row" *ngFor="let player of players_status.all">
-        <div class="col-md-4">
-          <span *ngIf="players_status.current.id === player.id" class="badge badge-success turn">Turno!</span>
-        </div>
-        <div class="col-md-4 text-left">
-          <span [ngStyle]="{'color': player.color}" class="badge text-uppercase mt-1">
-            {{ player.username }}
-          </span>
-        </div>
-        <div class="col-md-4">
-          <span class="badge badge-danger">{{player.global_point}}</span>
-        </div>
-      </div>
-
-
-
-    </div>
-
   </div>
 
 
   <input
     *ngIf="userData !== undefined && !started && connectedUsers.length > 1 &&  connectedUsers[0].username === userData.username"
-    type="button" class="btn btn-block btn-danger" value="Start" (click)='start()'>
+    type="button" class="btn btn-block btn-danger" value="Mandale Cumbia!!" (click)='start()'>
 
 </div>

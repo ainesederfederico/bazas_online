@@ -14,7 +14,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   me: Player;
 
   playedCards: { player: Player; card: Card }[] = new Array();
-  globalBets: { players: Player[]; totalBets: number };
+  globalBets: { nextPlayer:Player,players: Player[]; totalBets: number };
   hand_winner: { winner: Player; players: Player[] };
   players_status: {
     current: Player;
@@ -152,6 +152,22 @@ export class BoardComponent implements OnInit, OnDestroy {
   sendBet() {
     this.userService.sendBet(this.me.bet);
   }
+
+  whoHaveToBet(){
+
+    let playerToBet;
+
+    if((this.globalBets === undefined ||  this.globalBets.players.length === 0) && this.players_status != undefined){
+
+      playerToBet= this.players_status.current;
+    }else if(this.globalBets !== undefined && this.globalBets.nextPlayer !== undefined){
+
+      playerToBet= this.globalBets.nextPlayer;
+    }
+
+    return playerToBet != undefined ? playerToBet.username : undefined;
+  }
+
 
   getPlayerBet(username):any{
     if(this.globalBets !=undefined){

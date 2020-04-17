@@ -16,7 +16,7 @@ export class UsersService {
 
   newCardSent = this.socket.fromEvent<{player:Player,card:Card}[]>('new_card_sent');
 
-  new_bet_sent = this.socket.fromEvent<{players:Player[],totalBets:number}>('new_bet_sent');
+  new_bet_sent = this.socket.fromEvent<{nextPlayer:Player,players:Player[],totalBets:number}>('new_bet_sent');
 
   hand_finished = this.socket.fromEvent<{winner:Player,players:Player[]}>('hand_finished');
 
