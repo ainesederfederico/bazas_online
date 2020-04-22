@@ -109,7 +109,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             this.playedCards = new Array();
             this.hand_winner = undefined;
 
-          }, 3000);
+          }, 5000);
         },
         (error) => {
           console.error("BoardComponent.ngOnInit.hand_finished", error);
@@ -144,9 +144,14 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   sendCard(card) {
 
-    this.me.cards = this.me.cards.filter((obj) => obj !== card);
+    if(this.players_status && this.players_status.current.username == this.me.username && this.all_bets_ready && this.hand_winner == undefined){
+
+      this.me.cards = this.me.cards.filter((obj) => obj !== card);
 
     this.userService.sendCard(card);
+
+    }
+
   }
 
   sendBet() {

@@ -6,7 +6,7 @@
   border-radius: 10px;
 
   background: #96780f;
-  //background-image: url("/assets/img/zenbg_one.png"), url("/assets/img/zenbg_two.png");
+
   background-repeat: repeat-x, repeat;
 
   .dashboard {
@@ -15,13 +15,44 @@
     position: relative;
     height: auto;
     //border: 2px solid rgb(45, 58, 240);
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 5px;
+
 
     .general_messages {
 
-      border: 2px solid rgb(201, 45, 45);
-      border-radius: 10px;
+      p {
+
+        background-color: rgb(201, 45, 45);
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+
+      .winner-board-cover {
+        background-color: rgb(11, 226, 40);
+        animation: blinkingText 1.2s infinite;
+      }
+
+      @keyframes blinkingText {
+        0% {
+          color: #000;
+        }
+
+        49% {
+          color: #000;
+        }
+
+        60% {
+          color: transparent;
+        }
+
+        99% {
+          color: transparent;
+        }
+
+        100% {
+          color: #000;
+        }
+      }
 
     }
 
@@ -30,75 +61,98 @@
   .all_cards {
     position: relative;
     height: 35%;
-    //width: 97%;
-    margin: 10px;
-    //border: 2px solid black;
-    border-radius: 10px;
-    //background-color: #29a745;
-    padding: 10px;
+
 
     .cards {
       float: left;
-      height: 95%;
+      height: 80%;
       width: auto;
 
-      p{
+      p {
         color: white;
       }
+
       img {
         height: 85%;
       }
     }
 
   }
-.my_cards {
 
-  position: absolute;
-  bottom: 0;
-  height: 35%;
-  width: 97%;
-  margin: 10px;
-  border: 2px solid white;
-  border-radius: 10px;
+  .my_cards {
 
-  // overflow-x: scroll;
-  // overflow-y: hidden;
-  // white-space: nowrap;
+    width: 100%;
+    //height:150px;
+    white-space: nowrap;
+    position: fixed;
+    bottom: 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-left: -15px;
 
-  .cards {
+    img {
+      width: 24.5%;
+      max-width: 150px;
+      float: none;
+      height: 90%;
+      margin: 0 0.25%;
+      display: inline-block;
+      zoom: 1;
+    }
 
-    float: left;
-    height: 95%;
-    width: auto;
-    //display: inline-block;
 
+    .disable-board-cover {
+
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      background-color: rgb(177, 172, 172);
+      opacity: 0.5;
+    }
 
   }
-}
 
 
 }
 
 
-.winner-board-cover {
+// .winner-board-cover {
 
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  color: white;
+//   position: absolute;
+//   height: 100%;
+//   width: 100%;
+//   z-index: 1;
+//   color: white;
+//   bottom: 0px;
 
-
-}
-
-
-.disable-board-cover {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  background-color: rgb(177, 172, 172);
-  opacity: 0.5;
-}
+// }
 
 
+
+
+// .outer{
+//   width:100%;
+//   //height:150px;
+//   white-space: nowrap;
+//   position: fixed;
+//   bottom: 0px;
+//   overflow-x:scroll;
+//   overflow-y:hidden;
+// }
+
+// .outer img{
+//   width: 24.5%;
+//   max-width: 150px;
+//   //background-color: rgb(206, 62, 62);
+//   float: none;
+//   height: 90%;
+//   margin: 0 0.25%;
+//   display: inline-block;
+//   zoom: 1;
+// }

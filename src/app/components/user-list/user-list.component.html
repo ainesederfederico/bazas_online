@@ -1,43 +1,60 @@
-<div class='sidenav'  *ngIf="players_status==undefined">
+<div class='container-fluid' *ngIf="players_status==undefined">
 
 
   <div *ngIf="userData === undefined">
 
-    <div class="form-group">
-      <label for="username">Pone tu nombre</label>
-      <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username'
-        (keyup.enter)="join()">
+    <div class="row">
+      <div class="offset-md-4 col-md-4">
+        <label>Pone tu nombre</label>
+      </div>
     </div>
 
-    <input type="button" class="btn btn-block btn-success" value="Entrar" (click)='join()'>
-  </div>
+    <div class="row">
+      <div class="offset-md-4 col-md-4 form-group">
+        <input type="text" class="form-control text-uppercase" id="username" [(ngModel)]='username'
+          (keyup.enter)="join()">
+      </div>
+    </div>
 
-  <!-- ####################################################################################################### -->
-
-  <div class="users_list">
-
-    <div *ngIf="connectedUsers.length > 0">
-
-      <label class="text-uppercase">Jugadores Conectados</label>
-
-      <div class="row" *ngFor='let user of connectedUsers '>
-        <div class="col-md-4">
-
-        </div>
-        <div class="col-md-4">
-          <span [ngStyle]="{'color': user.color}" >
-            {{ user.username }}
-          </span>
-        </div>
-        <div class="col-md-4"></div>
+    <div class="row">
+      <div class="offset-md-4 col-md-4">
+        <input type="button" class="btn btn-block btn-success" value="Entrar" (click)='join()'>
       </div>
     </div>
 
   </div>
 
+  <!-- ####################################################################################################### -->
 
-  <input
-    *ngIf="userData !== undefined && !started && connectedUsers.length > 1 &&  connectedUsers[0].username === userData.username"
-    type="button" class="btn btn-block btn-danger" value="Mandale Cumbia!!" (click)='start()'>
+  <div class="users_list text-center">
+
+    <div *ngIf="connectedUsers.length > 0">
+      <div class="row">
+        <div class="offset-md-4 col-md-4 form-group ">
+          <label class="text-uppercase">Jugadores Conectados</label>
+        </div>
+      </div>
+
+      <div class="row" *ngFor='let user of connectedUsers '>
+        <div class="offset-md-4 col-md-4">
+          <span [ngStyle]="{'color': user.color}">
+            {{ user.username }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="offset-md-4 col-md-4">
+        <input
+          *ngIf="userData !== undefined && !started && connectedUsers.length > 1 &&  connectedUsers[0].username === userData.username"
+          type="button" class="btn btn-block btn-danger" value="Mandale Cumbia!!" (click)='start()'>
+
+      </div>
+    </div>
+
+
+  </div>
+
 
 </div>

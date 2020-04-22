@@ -7,10 +7,6 @@
 
         <h5 class="card-header">
           {{me.username}}
-        </h5>
-
-        <!-- MI APUESTA -->
-        <div class="card-footer">
 
           <div class="row" *ngIf="whoHaveToBet() !== me.username">
             <div class="col-md-12" *ngIf="whoHaveToBet() !== undefined">
@@ -20,11 +16,12 @@
               A comerla!
             </div>
           </div>
+
           <div class="row" *ngIf="whoHaveToBet() === me.username">
-            <div class="col-md-8">
+            <div class="col-sm-6">
               <a class="btn btn-default block">Tenes que apostar!</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-6">
               <select (change)="sendBet()" [(ngModel)]="me.bet"
                 [disabled]="me.username == players_status.last.username && !can_last_player_bet" class="form-control">
                 <option *ngFor='let element of getAvailableBets(); let i = index' [value]='element'>
@@ -33,16 +30,31 @@
               </select>
             </div>
           </div>
-        </div>
+
+        </h5>
+
+
       </div>
 
     </div>
-    <div class="col-md-3 general_messages bg-danger text-white text-center">
-      <p *ngIf="players_status != undefined && me.username === players_status.last.username"> Sos el ultimo en esta mano!</p>
+
+    <div class="col-md-3 text-white text-center general_messages">
+
+      <p *ngIf="players_status != undefined && me.username === players_status.last.username"> Sos el ultimo en esta
+        mano!</p>
       <p *ngIf='players_status && !all_bets_ready'> Todos tienen apostar antes de empezar! </p>
-      <p *ngIf='players_status && players_status.current.username == me.username && all_bets_ready' class="text-uppercase"> Es tu turno! </p>
-      <p *ngIf='players_status && players_status.current.username != me.username &&  all_bets_ready'> Es el turno de {{players_status.current.username}} </p>
+      <p *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'
+        class="text-uppercase"> Es tu turno! </p>
+      <p *ngIf='players_status && players_status.current.username != me.username &&  all_bets_ready'> Es el turno de
+        {{players_status.current.username}} </p>
+
+      <p class="winner-board-cover text-center" *ngIf="hand_winner !== undefined">
+
+        {{hand_winner.winner.username}} gano la baza!
+
+      </p>
     </div>
+
     <div class="col-md-6">
       <table class="table table-sm table-hover table-striped" *ngIf='players_status'>
         <thead>
@@ -93,11 +105,6 @@
   <!-- ####################################################################################################### -->
   <div class="row all_cards">
 
-    <div class="winner-board-cover text-center" *ngIf="hand_winner !== undefined">
-
-      <h2> El ganador es {{hand_winner.winner.username}}</h2>
-
-    </div>
 
     <div class="cards m-1" *ngFor='let playedCard of playedCards '>
 
@@ -109,14 +116,31 @@
   </div>
 
   <!-- ####################################################################################################### -->
-  <div class="row my_cards" *ngIf="me != undefined ">
+  <div class="my_cards" *ngIf="me != undefined ">
 
-    <div class="disable-board-cover"
-      [hidden]="players_status && players_status.current.username == me.username && all_bets_ready && hand_winner == undefined"></div>
+    <!-- <div class="disable-board-cover"
+      [hidden]="players_status && players_status.current.username == me.username && all_bets_ready && hand_winner == undefined">
+    </div> -->
 
-    <img class="cards m-2" [src]="'assets/img/'+card.image+'.png'" alt="image" *ngFor='let card of me.cards '
-      (click)="sendCard(card)">
+    <img [src]="'assets/img/'+card.image+'.png'" alt="image" *ngFor='let card of me.cards ' (click)="sendCard(card)">
   </div>
   <!-- ####################################################################################################### -->
 
 </div>
+
+<!-- <div class="outer">
+
+  <img _ngcontent-nhb-c41="" alt="image" class="cards " src="assets/img/copa_09.png">
+  <img _ngcontent-nhb-c41=""
+    alt="image" class="cards " src="assets/img/oro_02.png">
+    <img _ngcontent-nhb-c41="" alt="image" class="cards "
+    src="assets/img/basto_08.png">
+    <img _ngcontent-nhb-c41="" alt="image"
+    src="assets/img/oro_12.png">
+    <img _ngcontent-nhb-c41="" alt="image" class="cards "
+    src="assets/img/espada_11.png">
+    <img _ngcontent-nhb-c41="" alt="image" class="cards "
+    src="assets/img/copa_04.png">
+    <img _ngcontent-nhb-c41="" alt="image" class="cards " src="assets/img/copa_01.png">
+
+</div> -->

@@ -16,7 +16,7 @@ module.exports = internal.Hand = class {
 
     this.firstPlayerByHand = this.currentPlayer;
     this.lastPlayerByHand = this.getLastPlayerByHand();
-    this.cardsXPlayer = 2;
+    this.cardsXPlayer = 7;
     this.bets = 0;
 
   }
