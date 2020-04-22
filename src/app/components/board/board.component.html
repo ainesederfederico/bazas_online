@@ -5,21 +5,19 @@
     <div class="col-md-3">
       <div class="card bg-default">
 
-        <h5 class="card-header">
+        <div class="card-header">
           {{me.username}}
 
           <div class="row" *ngIf="whoHaveToBet() !== me.username">
             <div class="col-md-12" *ngIf="whoHaveToBet() !== undefined">
               {{whoHaveToBet()}} tiene que apostar!
             </div>
-            <div class="col-md-12" *ngIf="whoHaveToBet() === undefined">
-              A comerla!
-            </div>
+
           </div>
 
           <div class="row" *ngIf="whoHaveToBet() === me.username">
             <div class="col-sm-6">
-              <a class="btn btn-default block">Tenes que apostar!</a>
+              Tenes que apostar!
             </div>
             <div class="col-sm-6">
               <select (change)="sendBet()" [(ngModel)]="me.bet"
@@ -31,7 +29,7 @@
             </div>
           </div>
 
-        </h5>
+        </div>
 
 
       </div>
@@ -40,8 +38,8 @@
 
     <div class="col-md-3 text-white text-center general_messages">
 
-      <p *ngIf="players_status != undefined && me.username === players_status.last.username"> Sos el ultimo en esta
-        mano!</p>
+      <!-- <p *ngIf="players_status != undefined && me.username === players_status.last.username"> Sos el ultimo en esta
+        mano!</p> -->
       <p *ngIf='players_status && !all_bets_ready'> Todos tienen apostar antes de empezar! </p>
       <p *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'
         class="text-uppercase"> Es tu turno! </p>
