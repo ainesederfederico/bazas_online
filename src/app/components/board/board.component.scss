@@ -1,3 +1,32 @@
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 768px) {
+  .dashboard-desktop {
+    display: none;
+  }
+
+  .dashboard-mobile {
+    display: flex;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+  .dashboard-desktop {
+    display: flex;
+  }
+
+  .dashboard-mobile {
+    display: none;
+  }
+
+}
+
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media only screen and (min-width: 1200px) {
+
+// }
+
 .board {
   position: fixed;
   height: 100%;
@@ -9,7 +38,7 @@
 
   background-repeat: repeat-x, repeat;
 
-  .dashboard {
+  .dashboard-desktop {
 
     background: #f1f1f1;
     position: relative;
@@ -17,43 +46,63 @@
     //border: 2px solid rgb(45, 58, 240);
     border-radius: 5px;
 
+  }
 
-    .general_messages {
+  .dashboard-mobile {
 
-      p {
+    background: #f1f1f1;
+    height: auto;
+    // border: 2px solid rgb(45, 58, 240);
+    // border-radius: 5px;
 
-        background-color: rgb(201, 45, 45);
-        margin-top: 0px;
-        margin-bottom: 0px;
+    span {
+      text-align: center;
+    }
+
+    .table_users {
+      font-size: 10px;
+
+
+      z-index: 1;
+
+    }
+  }
+
+  .general_messages {
+
+    p {
+
+      background-color: rgb(201, 45, 45);
+      margin-top: 0px;
+      margin-bottom: 0px;
+      border-radius: 2px;
+    }
+
+    .winner-board-cover {
+      background-color: rgb(11, 226, 40);
+      animation: blinkingText 1.2s infinite;
+    }
+
+    @keyframes blinkingText {
+      0% {
+        color: #000;
       }
 
-      .winner-board-cover {
-        background-color: rgb(11, 226, 40);
-        animation: blinkingText 1.2s infinite;
+      49% {
+        color: #000;
       }
 
-      @keyframes blinkingText {
-        0% {
-          color: #000;
-        }
-
-        49% {
-          color: #000;
-        }
-
-        60% {
-          color: transparent;
-        }
-
-        99% {
-          color: transparent;
-        }
-
-        100% {
-          color: #000;
-        }
+      60% {
+        color: transparent;
       }
 
+      99% {
+        color: transparent;
+      }
+
+      100% {
+        color: #000;
+      }
     }
 
   }

@@ -1,7 +1,94 @@
 <div class="container-fluid board" *ngIf="me != undefined && players_status != undefined"
   [ngStyle]="{'background-image': 'url(/assets/img/zenbg_one.png), url(/assets/img/zenbg_two.png)'}">
 
-  <div class="row dashboard">
+  <div class="row dashboard-mobile">
+    <div class="col-md-4">
+
+      <div class="row" *ngIf="whoHaveToBet() !== undefined && whoHaveToBet() !== me.username">
+        <div class="col-md-12 text-center">
+          <span > {{whoHaveToBet()}} tiene que apostar! </span>
+        </div>
+
+      </div>
+
+      <div class="row" *ngIf="whoHaveToBet() === me.username">
+        <div class="col-md-6 text-center">
+          Tenes que apostar!
+        </div>
+        <div class="col-md-6">
+          <select (change)="sendBet()" [(ngModel)]="me.bet"
+            [disabled]="me.username == players_status.last.username && !can_last_player_bet" class="form-control">
+            <option *ngFor='let element of getAvailableBets(); let i = index' [value]='element'>
+              {{element}}
+            </option>
+          </select>
+        </div>
+    </div>
+
+    </div>
+    <div class="col-md-4 text-white text-center general_messages">
+
+      <!-- <p *ngIf="players_status != undefined && me.username === players_status.last.username"> Sos el ultimo en esta
+        mano!</p> -->
+      <p *ngIf='players_status && !all_bets_ready'> Todos tienen apostar antes de empezar! </p>
+      <p *ngIf='players_status && players_status.current.username == me.username && all_bets_ready'
+        class="text-uppercase"> Es tu turno! </p>
+      <p *ngIf='players_status && players_status.current.username != me.username &&  all_bets_ready'> Es el turno de
+        {{players_status.current.username}} </p>
+
+      <p class="winner-board-cover text-center" *ngIf="hand_winner !== undefined">
+
+        {{hand_winner.winner.username}} gano la baza!
+
+      </p>
+    </div>
+    <div class="col-md-4">
+      <table class="table table-sm table-hover table-striped table_users" *ngIf='players_status'>
+        <thead>
+          <tr>
+            <th>
+              Jugador
+            </th>
+            <th>
+              Apuesta
+            </th>
+            <th>
+              Bazas
+            </th>
+            <th>
+              Puntaje
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let player of players_status.all"
+            [ngClass]="{'bg-warning': player.id === players_status.current.id}">
+            <td>
+              {{player.username}}
+            </td>
+
+            <td>
+              {{getPlayerBet(player.username)}}
+            </td>
+
+            <td>
+              {{player.handsWon}}
+            </td>
+            <td>
+
+              <span class="badge badge-danger">{{player.global_point}}</span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row dashboard-desktop">
     <div class="col-md-3">
       <div class="card bg-default">
 
@@ -54,7 +141,7 @@
     </div>
 
     <div class="col-md-6">
-      <table class="table table-sm table-hover table-striped" *ngIf='players_status'>
+      <table class="table table-sm table-hover table-striped table_users" *ngIf='players_status'>
         <thead>
           <tr>
             <th>
